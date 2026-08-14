@@ -428,6 +428,12 @@ struct LyricsView: View {
         .padding(.bottom, max(bottomSafeInset, 12) + 20)
       }
     }
+    .onAppear {
+      viewModel.setLyricsScreenVisible(true)
+    }
+    .onDisappear {
+      viewModel.setLyricsScreenVisible(false)
+    }
   }
 }
 

@@ -55,6 +55,7 @@ enum UserDefaultsKeys {
   static let queueActiveIdx = "queueActiveIdx"
   static let nowPlayingProgress = "nowPlayingProgress"
   static let playbackMode = "playbackMode"
+  static let keepScreenAwake = "keepScreenAwake"
   static let enableDebug = "enableDebug"
   static let enableMaxBitRate = "enableMaxBitRate"
   static let playerBackground = "playerBackground"

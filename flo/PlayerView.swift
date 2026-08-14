@@ -200,7 +200,11 @@ struct PlayerView: View {
         }
         .offset(y: offset.height)
         .onChange(of: isExpanded) { expanded in
-            if expanded {offset = .zero}
+            if expanded { offset = .zero }
+            viewModel.setPlayerScreenVisible(expanded)
+        }
+        .onAppear {
+            viewModel.setPlayerScreenVisible(isExpanded)
         }
         .gesture(
           DragGesture()

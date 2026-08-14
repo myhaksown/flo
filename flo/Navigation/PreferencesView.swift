@@ -343,21 +343,36 @@ struct PreferencesView: View {
 
         // TODO: finish this later
         Section(header: Text("Experimental")) {
-          VStack(alignment: .leading, spacing: 4) {
-            Toggle(
-              "Enable Debug",
-              isOn: Binding(
-                get: { UserDefaultsManager.enableDebug },
-                set: { value in
-                  UserDefaultsManager.enableDebug = value
-                  APIManager.shared.reconfigureSession()
-                }
-              ))
-
-            Text(
-              "Enabling this option may affect the experience."
-            ).font(.caption).foregroundColor(.gray)
-          }
+            VStack(alignment: .leading, spacing: 4) {
+              Toggle(
+                "Keep awake during playback",
+                isOn: Binding(
+                  get: { UserDefaultsManager.keepScreenAwake },
+                  set: { value in
+                    UserDefaultsManager.keepScreenAwake = value
+                    playerViewModel.updateScreenAwakeState()
+                  }
+                ))
+              Text(
+                "Keep the screen on while playing. This may use more battery."
+              ).font(.caption).foregroundColor(.gray)
+            }
+        
+            VStack(alignment: .leading, spacing: 4) {
+                Toggle(
+                    "Enable Debug",
+                    isOn: Binding(
+                        get: { UserDefaultsManager.enableDebug },
+                        set: { value in
+                            UserDefaultsManager.enableDebug = value
+                            APIManager.shared.reconfigureSession()
+                        }
+                    ))
+                
+                Text(
+                    "Enabling this option may affect the experience."
+                ).font(.caption).foregroundColor(.gray)
+            }
 
           VStack(alignment: .leading) {
             Picker(selection: $experimentalLRCLIBIntegration, label: Text("LRCLIB")) {
