@@ -1631,6 +1631,9 @@
         }
       }
     },
+    "Keep awake during playback" : {
+
+    },
     "Keychain.%@" : {
       "localizations" : {
         "de" : {
@@ -3752,6 +3755,9 @@
           }
         }
       }
+    },
+    "While the player or lyrics are visible and music is playing the screen will stay awake.  This setting uses more power." : {
+
     },
     "Your Navidrome session may have expired" : {
       "localizations" : {

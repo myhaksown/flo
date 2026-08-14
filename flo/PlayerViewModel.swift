@@ -51,6 +51,9 @@ class PlayerViewModel: ObservableObject {
   private var playerItemObservation: AnyCancellable?
   private var interruptionObservation = Set<AnyCancellable>()
   private var routeChangeObservation = Set<AnyCancellable>()
+    
+  private var isPlayerScreenVisible = false
+  private var isLyricsScreenVisible = false
 
   private var scrobbleThreshold = 0.5
   private var hasTriggeredCache: Bool = false
@@ -459,6 +462,8 @@ class PlayerViewModel: ObservableObject {
     self.isPlaying = true
     self.updateNowPlayingInfo(progress: self.progress, rate: 1.0)
     MPNowPlayingInfoCenter.default().playbackState = .playing
+      
+    self.updateScreenAwakeState()
   }
 
   func pause() {
@@ -467,6 +472,8 @@ class PlayerViewModel: ObservableObject {
     self.isPlaying = false
     self.updateNowPlayingInfo(progress: self.progress, rate: 0.0)
     MPNowPlayingInfoCenter.default().playbackState = .paused
+      
+    self.updateScreenAwakeState()
   }
 
   func stop() {
@@ -475,6 +482,8 @@ class PlayerViewModel: ObservableObject {
 
     self.isFinished = true
     self.isPlaying = false
+      
+    self.updateScreenAwakeState()
   }
 
   func seek(to progress: Double) {
@@ -854,6 +863,24 @@ class PlayerViewModel: ObservableObject {
     }
   }
 
+    func updateScreenAwakeState() {
+      let shouldStayAwake = UserDefaultsManager.keepScreenAwake
+        && isPlaying
+        && (isPlayerScreenVisible || isLyricsScreenVisible)
+
+      UIApplication.shared.isIdleTimerDisabled = shouldStayAwake
+
+    }
+    func setPlayerScreenVisible(_ visible: Bool) {
+      isPlayerScreenVisible = visible
+      updateScreenAwakeState()
+    }
+
+    func setLyricsScreenVisible(_ visible: Bool) {
+      isLyricsScreenVisible = visible
+      updateScreenAwakeState()
+    }
+    
   deinit {
     if let timeObserverToken = timeObserverToken {
       player?.removeTimeObserver(timeObserverToken)

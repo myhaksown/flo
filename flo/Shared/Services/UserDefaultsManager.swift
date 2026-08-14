@@ -69,7 +69,15 @@ class UserDefaultsManager {
       UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.playbackMode)
     }
   }
+    static var keepScreenAwake: Bool {
+      get {
+        return UserDefaults.standard.bool(forKey: UserDefaultsKeys.keepScreenAwake)
+      }
 
+      set {
+        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.keepScreenAwake)
+      }
+    }
   static var enableDebug: Bool {
     get {
       return UserDefaults.standard.bool(forKey: UserDefaultsKeys.enableDebug)
